@@ -1,0 +1,2205 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SHIVANG</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <!-- Tailwind CSS CDN for Insurance Comparison Dashboard styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- #region 🔒 NAVIGATION BUTTONS -->
+    <div class="flex flex-wrap gap-4 justify-center p-10 bg-gradient-to-tr from-blue-100 to-purple-100">
+        <button class="animated-btn bg-gradient-to-r from-blue-500 to-blue-700" onclick="openCSATModal()">CSAT
+            Calculator</button>
+        <button class="animated-btn bg-gradient-to-r from-green-500 to-green-700" onclick="openEndorsementPage()">
+            <div style="line-height: 1.2;">
+                <div>ENDORSEMENT</div>
+                <div style="font-size: 11px; opacity: 0.85;">Last Update: 19-03-2026</div>
+            </div>
+        </button><button class="animated-btn bg-gradient-to-r from-indigo-500 to-indigo-700"
+            onclick="openManualVIPage()">MANUAL-VI &amp; Claim Coverage</button>
+        <button class="animated-btn bg-gradient-to-r from-indigo-500 to-indigo-700"
+            onclick="openClaimCountNSTPPage()">Claim_Count &amp; NSTP</button>
+        <button class="animated-btn bg-gradient-to-r from-orange-500 to-orange-700"
+            onclick="openInspectionWaiverPage()">Inspection Waiver</button>
+        <button class="animated-btn bg-gradient-to-r from-orange-500 to-orange-700" onclick="openRSAPage()">RSA &amp;
+            CONTACT</button>
+        <button class="animated-btn bg-gradient-to-r from-purple-500 to-purple-700"
+            onclick="window.open('https://ntqueprince.github.io/notebook/', '_blank')">NOTEBOOK</button>
+        <button class="animated-btn bg-gradient-to-r from-pink-500 to-pink-700" onclick="openIncentiveModal()">INCENTIVE
+            CALCULATOR</button>
+        <button class="animated-btn bg-gradient-to-r from-teal-500 to-emerald-700"
+            onclick="window.open('https://ntqueprince.github.io/mail/', '_blank')">TICKETING MAIL</button>
+        <button class="animated-btn bg-gradient-to-r from-cyan-500 to-cyan-700"
+            onclick="window.open('https://ntqueprince.github.io/resume/', '_blank')">Resume-Builder</button>
+        <button class="animated-btn bg-gradient-to-r from-yellow-500 to-yellow-700" onclick="openPBWheelsScript()">PB
+            Wheels - Script</button>
+        <button class="animated-btn bg-gradient-to-r from-indigo-600 to-blue-800"
+            onclick="window.open('https://ntqueprince.github.io/json_converter/', '_blank')">JSON-CHANGER</button>
+        <button class="animated-btn bg-gradient-to-r from-violet-500 to-purple-700"
+            onclick="window.open('https://ntqueprince.github.io/ocr/', '_blank')">📄 OCR</button>
+        <button class="animated-btn bg-gradient-to-r from-rose-500 to-red-700" onclick="openGameHub()">🎮 Game
+            Hub</button>
+        <button class="animated-btn bg-gradient-to-r from-amber-500 to-orange-700" onclick="openQuickLinks()">🚀 Quick
+            Links</button>
+        <button class="animated-btn bg-gradient-to-r from-pink-500 to-rose-600" onclick="openPiano()">🎹 Play
+            Piano</button>
+        <button class="animated-btn bg-gradient-to-r from-fuchsia-500 to-violet-700" onclick="openSongsHub()">🎵
+            Songs</button>
+        <button class="animated-btn bg-gradient-to-r from-teal-500 to-teal-700" onclick="openScorecardModal()">📊
+            IB-SCORECARD</button>
+        <button class="secondary cov-btn" id="btnCompanyOwned">Company Owned Not Allowed</button>
+    </div>
+    <!-- Renamed Manual VI button -->
+    <!-- New button for Claim_Count & NSTP -->
+    <!-- New button for Inspection Waiver -->
+    <!-- New button for RSA & Contact -->
+    <!-- "📷SHIVANG" header ko "Aaj Ki Baat" button se replace kiya gaya hai -->
+    <!-- REPLACED: Aaj Ki Baat button will now be the UPDATES button -->
+    <!-- New Notebook button added here -->
+
+    <!-- "UPDATES" button moved here, above the upload-section -->
+    <div id="companyUpdatesButton">
+        <span>UPDATES</span>
+        <span id="latestUpdateSnippet"></span>
+        <span id="newUpdateIndicator"></span>
+    </div>
+    <div class="shivang-glow">SHIVANG</div>
+
+    <div class="upload-section">
+        <h2>Upload Images</h2>
+        <label for="fileUpload">Choose image files to upload:</label>
+        <input accept="image/*" id="fileUpload" type="file" multiple />
+        <div id="filePreviewContainer" class="file-preview-container"></div>
+        <input id="tagInput" placeholder="Enter tag (e.g., SHIVANG)" type="text" />
+        <div class="password-field-wrapper">
+            <input id="passwordInput" placeholder="🔒 Set password (optional)" type="password" />
+            <button class="toggle-password-btn" onclick="togglePasswordVisibility('passwordInput', this)" type="button">👁</button>
+        </div>
+        <button class="colorful-upload-btn" onclick="uploadImage()">Upload</button>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress">0%</div>
+            </div>
+            <div class="status" id="status">Ready</div>
+        </div>
+    </div>
+    <h3>Uploaded Images</h3>
+    <div id="gallery"></div>
+    <div class="modal" id="tagModal">
+        <div class="modal-content">
+            <h4 id="modalHeading">⚠️ Tag is required!</h4>
+            <input id="modalTagInput" placeholder="Enter tag (e.g., SHIVANG)" type="text" />
+            <div class="password-field-wrapper">
+                <input id="modalPasswordInput" placeholder="🔒 Set password (optional)" type="password" />
+                <button class="toggle-password-btn" onclick="togglePasswordVisibility('modalPasswordInput', this)" type="button">👁</button>
+            </div>
+            <button class="upload-btn" onclick="submitTag()">Upload</button>
+            <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            <div class="modal-progress-container" id="modalProgressContainer">
+                <div class="modal-progress-bar">
+                    <div class="modal-progress" id="modalProgress">0%</div>
+                </div>
+                <div class="modal-status" id="modalStatus">Uploading...</div>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 CSAT CALCULATOR MODAL -->
+    <div class="csat-modal" id="csatModal">
+        <div class="csat-modal-content">
+            <h4>CSAT Calculator</h4>
+            <div class="input-section good-section">
+                <label>Good Count:</label>
+                <input id="goodCount" min="0" type="number" value="0" />
+            </div>
+            <div class="input-section bad-section">
+                <label>Bad Count:</label>
+                <input id="badCount" min="0" type="number" value="0" />
+            </div>
+            <div class="input-section">
+                <label>Required CSAT (%):</label>
+                <select id="requiredCSAT">
+                    <option value="70">70%+</option>
+                    <option value="71">71%+</option>
+                    <option value="72">72%+</option>
+                    <option value="73">73%+</option>
+                    <option value="74">74%+</option>
+                    <option value="75">75%+</option>
+                    <option value="76">76%+</option>
+                    <option value="77">77%+</option>
+                    <option value="78">78%+</option>
+                    <option value="79">79%+</option>
+                    <option value="80">80%+</option>
+                    <option value="81">81%+</option>
+                    <option value="82">82%+</option>
+                    <option value="83">83%+</option>
+                    <option value="84">84%+</option>
+                    <option value="85">85%+</option>
+                    <option value="86">86%+</option>
+                    <option value="87">87%+</option>
+                    <option value="88">88%+</option>
+                    <option value="89">89%+</option>
+                    <option value="90">90%+</option>
+                    <option value="91">91%+</option>
+                    <option value="92">92%+</option>
+                    <option value="93">93%+</option>
+                    <option value="94">94%+</option>
+                    <option value="95">95%+</option>
+                    <option value="96">96%+</option>
+                    <option value="97">97%+</option>
+                    <option value="98">98%+</option>
+                    <option value="99">99%+</option>
+                    <option value="100">100%+</option>
+                </select>
+            </div>
+            <div class="result-section" id="csatResult">
+                <p>Total: 0</p>
+                <p>CSAT: 0%</p>
+                <p id="csatStatus">Enter counts to see status</p>
+            </div>
+            <!-- New button container for alignment -->
+            <div class="button-container">
+                <button class="close-btn" onclick="closeCSATModal()">Close</button>
+                <button class="calculate-btn" id="calculateButton" onclick="calculateCSAT()">Calculate</button>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 UPDATES MODAL -->
+    <div class="modal-overlay" id="updatesModal">
+        <div class="modal-content">
+            <span class="modal-close-button" id="closeModalButton">×</span>
+            <h2>Company Updates</h2>
+            <div id="updatesContainer">
+                <!-- Updates will be populated here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 ENDORSEMENT PAGE -->
+    <div class="endorsement-page" id="endorsementPage">
+        <div class="endorsement-container">
+            <h1>ENDORSEMENT</h1>
+            <div class="created-by">Created by Shivang</div>
+            <button class="back-btn" onclick="closeEndorsementPage()">Back to Main Page</button>
+            <label for="insurer">Select Insurance Company:</label>
+            <select class="PB_DROPDOWN" id="insurer">
+                <option disabled="" selected="">Select Insurer</option>
+            </select>
+            <label for="requirement">Select Requirement:</label>
+            <select class="PB_DROPDOWN" disabled="" id="requirement">
+                <option disabled="" selected="">Select Requirement</option>
+            </select>
+            <div class="output" id="output"></div>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 MANUAL-VI & CLAIM COVERAGE PAGE -->
+    <div class="manual-vi-page" id="manualVIPage">
+        <button class="back-btn" onclick="closeManualVIPage()">Back to Main Page</button>
+        <!-- New "Claim Coverage" button with green color -->
+        <button class="claim-coverage-btn back-btn claim-coverage-btn-green" onclick="toggleClaimCoverage()">Claim
+            Coverage</button>
+        <div class="card mt-4" id="manualVICardContent">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            </div>
+            <div class="card-body">
+                <div
+                    class="mb-3 p-3 rounded-xl shadow-md bg-gradient-to-r from-blue-50 to-indigo-100 border border-blue-200">
+                    <h2 class="text-2xl font-bold text-indigo-800 mb-4 text-center">ADP Home Visit & Garage Visit Cities
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table
+                            class="min-w-full text-sm text-gray-800 border border-gray-300 rounded-lg overflow-hidden">
+                            <table
+                                class="adp-table min-w-full text-sm text-gray-800 border border-gray-300 rounded-lg overflow-hidden">
+
+                                <thead class="bg-indigo-600 text-white">
+                                    <tr>
+                                        <th class="px-3 py-2 border border-gray-300">City</th>
+                                        <th class="px-3 py-2 border border-gray-300">Home Visit</th>
+                                        <th class="px-3 py-2 border border-gray-300">Garage Visit</th>
+                                        <th class="px-3 py-2 border border-gray-300">City</th>
+                                        <th class="px-3 py-2 border border-gray-300">Home Visit</th>
+                                        <th class="px-3 py-2 border border-gray-300">Garage Visit</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200 text-center">
+                                    <tr>
+                                        <td>Aligarh</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Madurai</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alwar</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Mathura</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ambala</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Moradabad</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ambattur - Chennai</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Muzaffarnagar</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amritsar</td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                        <td>Mysore</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Belgaum</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Nagpur</td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bhiwani</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Panipat</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bhubaneshwar</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Pondicherry</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bilaspur</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Raipur</td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chennai</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Rajkot</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coimbatore</td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                        <td>Rewa</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dhanbad</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Rewari</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Guwahati</td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                        <td>Rohtak</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Haldwani</td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                        <td>Satara</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Haridwar</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Shimla</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jamshedpur</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Surat</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jhajjar</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Thiruvananthapuram</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jhansi</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Thrissur</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jind</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Udaipur</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jodhpur</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Varanasi</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kangra</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                        <td>Yamuna Nagar</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+                <div
+                    class="mb-6 p-6 rounded-xl shadow-md bg-gradient-to-r from-green-50 to-emerald-100 border border-emerald-200">
+                    <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center">Manual Home Visit Cities (14)</h2>
+
+                    <div
+                        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center font-medium text-gray-800">
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Ahmedabad</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Bangalore</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Chennai</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Delhi</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Faridabad</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Ghaziabad</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Gurgaon</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Hyderabad</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Kolkata</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Mumbai</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Noida &amp; Greater
+                            Noida</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Patna</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Pune</div>
+                        <div class="bg-white rounded-lg py-2 shadow-sm hover:shadow-md transition">Thane &amp; Navi
+                            Mumbai</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Claim Coverage Overlay -->
+        <div class="claim-coverage-overlay" id="claimCoverageOverlay">
+            <div class="claim-coverage-content">
+                <h4>Claim Coverage Details</h4>
+                <ul>
+                    <li><strong>Plastic Nylon Rubber:</strong> 50%</li>
+                    <li><strong>Tyre tube Batteries:</strong> 50%</li>
+                    <li><strong>Denting Painting:</strong> 87.5%</li>
+                    <li><strong>Fiberglass:</strong> 70%</li>
+                    <li><strong>Windshield glass:</strong> 100%</li>
+                    <li><strong>Metal, Wooden fiber and other parts:</strong> As per car age</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 CLAIM COUNT & NSTP SECTION -->
+    <!-- New Claim_Count & NSTP Section (Insurance Comparison Dashboard) -->
+    <div class="claim-count-nstp-page" id="claimCountNSTPPage">
+        <div class="container mx-auto p-4 bg-white rounded-2xl shadow-2xl max-w-7xl w-full border-4 border-transparent bg-clip-border bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+            style="margin-top: 20px;">
+            <h1 class="text-4xl font-bold text-center mb-6 text-indigo-800 tracking-tight">Insurance Comparison
+                Dashboard</h1>
+            <div class="mb-4">
+                <input
+                    class="search-input w-full p-3 text-lg border-2 border-blue-500 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-pink-500 bg-blue-50 text-gray-800 placeholder-gray-500"
+                    id="searchInput" placeholder="Search by Insurer Name..." type="text" />
+            </div>
+            <div class="overflow-x-auto rounded-lg">
+                <table class="w-full bg-white border border-gray-300" id="insuranceTable">
+                    <thead class="bg-gray-900 text-white text-lg font-semibold">
+                        <tr>
+                            <th class="table-header p-2 text-left" data-column="insurer_name">Insurer Name</th>
+                            <th class="table-header p-2 text-left" data-column="zd_claims_year">ZD Claims/Year</th>
+                            <th class="table-header p-2 text-left" data-column="non_zd_claims_year">Non-ZD Claims/Year
+                            </th>
+                            <th class="table-header p-2 text-left" data-column="video_approval">Video Approval</th>
+                            <th class="table-header p-2 text-left" data-column="video_tat">Video TAT</th>
+                            <th class="table-header p-2 text-left" data-column="short_partial">Short/Partial</th>
+                            <th class="table-header p-2 text-left" data-column="cng_kit_vi">CNG Kit In VI</th>
+                            <th class="table-header p-2 text-left" data-column="artificial_low_lighting">Artificial/Low
+                                Lighting</th>
+                            <th class="table-header p-2 text-left" data-column="scar_declaration">Scar Declaration</th>
+                            <th class="table-header p-2 text-left" data-column="brand_new_3_3">3+3 Brand New</th>
+                            <th class="table-header p-2 text-left" data-column="old_3_3">3+3 Old</th>
+                            <th class="table-header p-2 text-left" data-column="vas">VAS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-800 text-base" id="tableBody">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button class="back-btn" onclick="closeClaimCountNSTPPage()">Back to Main Page</button>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 INSPECTION WAIVER PAGE -->
+    <!-- New Inspection Waiver Page -->
+    <div class="inspection-waiver-page" id="inspectionWaiverPage">
+        <div class="inspection-waiver-container">
+            <h1>Inspection Waiver</h1>
+            <div class="created-by">Created by Shivang</div>
+            <div class="inspection-waiver-table-container">
+                <table class="inspection-waiver-table">
+                    <thead>
+                        <tr>
+                            <th>Insurer Name</th>
+                            <th>Policy Waiver</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inspectionWaiverTableBody">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <button class="back-btn" onclick="closeInspectionWaiverPage()">Back to Main Page</button>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 RSA & CONTACT PAGE -->
+    <!-- New RSA & Contact Page -->
+    <div class="rsa-contact-page" id="rsaContactPage">
+        <div class="rsa-contact-container">
+            <h1>RSA &amp; CONTACT</h1>
+            <div class="created-by">Created by Shivang</div>
+            <div class="mb-4">
+                <input
+                    class="search-input w-full p-3 text-lg border-2 border-purple-500 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-pink-500 bg-purple-50 text-gray-800 placeholder-gray-500"
+                    id="rsaSearchInput" placeholder="Search by Insurer Name..." type="text" />
+            </div>
+            <div class="rsa-contact-table-container">
+                <table class="rsa-contact-table">
+                    <thead>
+                        <tr>
+                            <th>Sr.</th>
+                            <th>Insurer Name</th>
+                            <th>RSA and Toll Free Number</th>
+                            <th>Claim No.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rsaContactTableBody">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <button class="back-btn" onclick="closeRSAPage()">Back to Main Page</button>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 🔒 COMPANY OWNED MODAL -->
+    <!-- Company Owned Modal -->
+    <div class="modalOverlay" id="covModal">
+        <div class="modalBox">
+            <div class="modalHeader">
+                <h2>Company Owned Vehicle Insurance Not Allowed</h2>
+                <button class="modalClose" id="covClose">✖</button>
+            </div>
+
+            <div class="modalBtns">
+                <button class="secondary" id="btn2W">2W</button>
+                <button class="secondary" id="btn4W">4W</button>
+            </div>
+
+            <div class="modalContent" id="covList">
+                <p class="small">Select 2W or 4W to view companies.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎹 Playable Piano Modal -->
+    <div id="pianoOverlay"
+        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; backdrop-filter:blur(6px);">
+        <div
+            style="background:linear-gradient(135deg,#1f2937,#111827); border-radius:16px; padding:30px; padding-bottom:15px; max-width: 900px; width: 95%; box-shadow:0 0 50px rgba(255,255,255,0.1); border:1px solid #374151; position:relative; text-align:center;">
+            <button onclick="closePiano()"
+                style="position:absolute; top:12px; right:16px; background:none; border:none; color:#9ca3af; font-size:24px; cursor:pointer; z-index:10; transition:color 0.2s;">✖</button>
+            <h2 style="color:#f3f4f6; font-size:24px; margin:0 0 4px 0; font-weight:700; letter-spacing:1px;">🎹
+                Interactive Piano</h2>
+            <p style="color:#9ca3af; font-size:13px; margin:0 0 24px 0;">Use your keyboard <kbd
+                    style="background:#374151; padding:2px 6px; border-radius:4px; font-size:11px;">A - Z</kbd> or click
+                to play</p>
+
+            <div id="pianoContainer"
+                style="display:flex; justify-content:center; position:relative; gap:1px; height:180px; padding:10px 10px 0 10px; background:#000; border-radius:8px 8px 0 0; box-shadow:inset 0 10px 20px rgba(0,0,0,0.5); overflow-x: auto; white-space: nowrap;">
+                <!-- Keys will be injected here by JS -->
+            </div>
+
+            <div
+                style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;">
+                <span style="color:#9ca3af; font-size:14px;">🔊 Volume:</span>
+                <input type="range" id="pianoVolume" min="0" max="100" value="50"
+                    style="width:120px; accent-color:#f3f4f6;">
+                <span style="color:#9ca3af; font-size:14px; margin-left:16px;">⚡ Speed:</span>
+                <select id="pianoSpeed"
+                    style="background:#374151; color:#f3f4f6; border:1px solid #4b5563; border-radius:6px; padding:4px 8px; font-size:13px; cursor:pointer;">
+                    <option value="0.5">0.5x Slow</option>
+                    <option value="0.75">0.75x</option>
+                    <option value="1" selected>1x Normal</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x Fast</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+
+            <!-- 🎵 Demo Songs -->
+            <div style="margin-top:16px; padding:0 4px;" id="demoSongsSection">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="color:#d1d5db; font-size:13px; font-weight:600;">🎵 Famous Tunes</span>
+                    <span id="nowPlayingLabel"
+                        style="color:#a78bfa; font-size:11px; font-weight:600; display:none;"></span>
+                </div>
+                <div id="demoSongsList" style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center;"></div>
+                <!-- Selected Song Keys -->
+                <div id="songKeysSection" style="margin-top:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span id="selectedSongTitle" style="color:#fbbf24; font-size:13px; font-weight:700;"></span>
+                        <div style="display:flex; gap:6px;">
+                            <button id="songPlayBtn" onclick="playSelectedSong()"
+                                style="background:linear-gradient(135deg,#10b981,#059669); color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:11px; cursor:pointer; font-weight:700;">▶
+                                Play</button>
+                            <button id="songStopBtn" onclick="stopDemoSong()"
+                                style="display:none; background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:11px; cursor:pointer; font-weight:700;">⏹
+                                Stop</button>
+                        </div>
+                    </div>
+                    <div id="songKeysGrid"
+                        style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; padding:8px; background:rgba(15,23,42,0.4); border-radius:10px;">
+                    </div>
+                </div>
+            </div>
+            <p style="color:#6b7280; font-size:11px; margin:14px 0 0 0; font-style:italic;">Created by Shivang</p>
+        </div>
+    </div>
+
+    <style>
+        .piano-key {
+            position: relative;
+            cursor: pointer;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            transition: background 0.1s, transform 0.1s;
+        }
+
+        .white-key {
+            width: 28px;
+            min-width: 25px;
+            height: 100%;
+            background: linear-gradient(to bottom, #fff 0%, #f3f4f6 100%);
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 1;
+        }
+
+        .white-key.active {
+            background: linear-gradient(to bottom, #e5e7eb 0%, #cbd5e1 100%);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(2px);
+        }
+
+        .white-key.highlight-next {
+            background: linear-gradient(to bottom, #fef3c7 0%, #fde68a 100%) !important;
+            box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
+        }
+
+        .key-label {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 0;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: all 0.1s;
+        }
+
+        .white-key.active .key-label {
+            transform: translateX(-50%) scale(0.9);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .song-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(55, 65, 81, 0.6);
+            border: 1px solid rgba(75, 85, 99, 0.5);
+            color: #e5e7eb;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .song-pill:hover {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: rgba(129, 140, 248, 0.5);
+        }
+
+        .song-pill.active {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: rgba(52, 211, 153, 0.6);
+            color: #6ee7b7;
+        }
+
+        .song-pill.selected {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.5);
+            color: #fbbf24;
+        }
+
+        .key-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 5px;
+            font-weight: 800;
+            font-size: 11px;
+            cursor: pointer;
+            color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            transition: transform 0.12s;
+        }
+
+        .key-badge:hover {
+            transform: scale(1.15);
+        }
+
+        .key-badge:active {
+            transform: scale(0.9);
+        }
+
+        .practice-key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+            color: #fff;
+            border: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.12s, box-shadow 0.15s;
+            user-select: none;
+        }
+
+        .practice-key:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .practice-key:active {
+            transform: scale(0.9);
+        }
+    </style>
+
+    <!-- Audio Element for Radio -->
+    <audio id="fmAudioPlayer" preload="none"></audio>
+
+    <!-- Quick Links + Hindi Music Script (standalone, not dependent on module) -->
+    <script>
+        function openQuickLinks() {
+            var password = prompt('🔒 Enter Password to open Quick Links:');
+            if (password !== 'shivangpb') {
+                if (password !== null) alert('❌ Wrong Password!');
+                return;
+            }
+
+            // chrome://flags - copy to clipboard
+            try {
+                navigator.clipboard.writeText('chrome://flags/');
+                alert('✅ "chrome://flags/" copied to clipboard!\nPaste it in a new tab.\n\nAll other links will now open.');
+            } catch (e) {
+                prompt('⚠️ Copy this URL manually and paste in a new tab:', 'chrome://flags/');
+            }
+
+            // Reversed order: matrix → sheets → forms → textbook → CVANG → chat → BMS (last)
+            var links = [
+                'https://matrixdashboard.policybazaar.com/admin/realtimedashboard',
+                'https://docs.google.com/spreadsheets/d/1wq1xc_L5DHRzYnHXeHc6SRaum8BBwWn5ntKbZafVHtk/edit?gid=0#gid=0',
+                'https://docs.google.com/forms/d/e/1FAIpQLScliXNbSsS85LhQiiFDkQXGBgJIHon2ByR9Wm0X9j4BUqedVg/formResponse',
+                'https://ntqueprince.github.io/textbook/',
+                'https://ntqueprince.github.io/CVANG_VAHAN/',
+                'https://chatinternal.policybazaar.com/channel/6854fee0f93b60e3e7de14ca',
+                'https://bms.policybazaar.com/dashboardV3'
+            ];
+
+            links.forEach(function (url, i) {
+                setTimeout(function () {
+                    window.open(url, '_blank');
+                }, i * 300);
+            });
+        }
+
+        // 🎹 Playable Piano Logic (A-Z)
+        var audioCtx = null;
+        var isPianoOpen = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playPianoNote(frequency, keyElement) {
+            initAudio();
+
+            // Visual feedback
+            if (keyElement) {
+                keyElement.classList.add('active');
+                setTimeout(function () { keyElement.classList.remove('active'); }, 150);
+            }
+
+            var vol = document.getElementById('pianoVolume').value / 100;
+
+            // Layer 1: Triangle (Fundamental tone)
+            var osc1 = audioCtx.createOscillator();
+            var gain1 = audioCtx.createGain();
+            osc1.type = 'triangle';
+            osc1.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            osc1.connect(gain1);
+            gain1.connect(audioCtx.destination);
+
+            // Layer 2: Sine (Softness & Body)
+            var osc2 = audioCtx.createOscillator();
+            var gain2 = audioCtx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            // Slight detune for richness
+            osc2.frequency.value += 1;
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+
+            // ADSR Envelope for Piano (Attack, Decay, Sustain, Release)
+            var attack = 0.02;
+            var decay = 0.3;
+            var sustain = 0.1;
+            var release = 0.8;
+            var now = audioCtx.currentTime;
+
+            // Apply Envelope to both layers
+            [gain1, gain2].forEach(function (gNode, idx) {
+                var mixVol = (idx === 0) ? vol * 0.7 : vol * 0.3; // Balance the layers
+                gNode.gain.setValueAtTime(0, now);
+                gNode.gain.linearRampToValueAtTime(mixVol, now + attack); // Peak
+                gNode.gain.exponentialRampToValueAtTime(mixVol * sustain + 0.001, now + attack + decay); // Decay to sustain
+                gNode.gain.exponentialRampToValueAtTime(0.001, now + attack + decay + release); // Release fade out
+            });
+
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + attack + decay + release);
+            osc2.stop(now + attack + decay + release);
+        }
+
+        function openPiano() {
+            document.getElementById('pianoOverlay').style.display = 'flex';
+            isPianoOpen = true;
+            initAudio(); // Warm up audio context
+        }
+
+        function closePiano() {
+            document.getElementById('pianoOverlay').style.display = 'none';
+            isPianoOpen = false;
+            if (typeof stopDemoSong === 'function') stopDemoSong();
+        }
+
+        var keyMap = {};
+
+        // Generate A-Z keys on load
+        document.addEventListener('DOMContentLoaded', function () {
+            var container = document.getElementById('pianoContainer');
+            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            // Frequencies starting from C3 (130.81Hz)
+            var baseFreq = 130.81;
+            var scaleMultiplier = Math.pow(2, 1 / 12); // Semitone
+
+            // Vibrant colors for the keys
+            var colors = [
+                '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e', '#10b981', '#14b8a6',
+                '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#d946ef',
+                '#ec4899', '#f43f5e', '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e',
+                '#10b981', '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6'
+            ];
+
+            // Generate 26 keys mapped to A-Z
+            for (var i = 0; i < alphabet.length; i++) {
+                var letter = alphabet[i];
+                var lowerLetter = letter.toLowerCase();
+
+                var freq = baseFreq * Math.pow(scaleMultiplier, i);
+
+                keyMap[lowerLetter] = freq;
+
+                var keyDiv = document.createElement('div');
+                keyDiv.className = 'piano-key white-key';
+                keyDiv.setAttribute('data-note', freq);
+                keyDiv.setAttribute('data-key', lowerLetter);
+
+                // Add a subtle color tint to the key bottom
+                keyDiv.style.borderBottom = `4px solid ${colors[i]}`;
+
+                var span = document.createElement('span');
+                span.className = 'key-label';
+                span.textContent = letter;
+                span.style.color = colors[i];
+
+                keyDiv.appendChild(span);
+
+                // Mouse logic
+                keyDiv.addEventListener('mousedown', function () {
+                    var f = parseFloat(this.getAttribute('data-note'));
+                    playPianoNote(f, this);
+                });
+
+                container.appendChild(keyDiv);
+            }
+        });
+
+        var keysPressed = {};
+
+        document.addEventListener('keydown', function (e) {
+            if (!isPianoOpen) return;
+            var key = e.key.toLowerCase();
+
+            // Prevent repeat triggers for long holds
+            if (keysPressed[key]) return;
+
+            if (key === 'escape') {
+                closePiano();
+                return;
+            }
+
+            if (keyMap[key]) {
+                keysPressed[key] = true;
+                if (!e.metaKey && !e.ctrlKey) {
+                    e.preventDefault(); // Stop page scrolling
+                }
+                var keyElement = document.querySelector('.piano-key[data-key="' + key + '"]');
+                if (keyElement) {
+                    playPianoNote(keyMap[key], keyElement);
+                }
+            }
+        });
+
+        document.addEventListener('keyup', function (e) {
+            var key = e.key.toLowerCase();
+            keysPressed[key] = false;
+        });
+
+        // Close on overlay click
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.id === 'pianoOverlay') {
+                closePiano();
+            }
+        });
+
+        // ====== 🎵 DEMO SONGS ======
+        // Keys: A=C3..M=C4, O=D4, Q=E4, R=F4, T=G4, V=A4, X=B4, Y=C5
+        var demoSongTimeout = null;
+        var demoSongPlaying = false;
+
+        var demoSongs = {
+            'Twinkle Twinkle': {
+                emoji: '⭐', notes: [
+                    ['m', 400], ['m', 400], ['t', 400], ['t', 400], ['v', 400], ['v', 400], ['t', 800],
+                    ['r', 400], ['r', 400], ['q', 400], ['q', 400], ['o', 400], ['o', 400], ['m', 800],
+                    ['t', 400], ['t', 400], ['r', 400], ['r', 400], ['q', 400], ['q', 400], ['o', 800],
+                    ['t', 400], ['t', 400], ['r', 400], ['r', 400], ['q', 400], ['q', 400], ['o', 800],
+                    ['m', 400], ['m', 400], ['t', 400], ['t', 400], ['v', 400], ['v', 400], ['t', 800],
+                    ['r', 400], ['r', 400], ['q', 400], ['q', 400], ['o', 400], ['o', 400], ['m', 800]
+                ]
+            },
+            'Happy Birthday': {
+                emoji: '🎂', notes: [
+                    ['t', 300], ['t', 200], ['v', 500], ['t', 500], ['y', 500], ['x', 900],
+                    ['t', 300], ['t', 200], ['v', 500], ['t', 500], ['z', 500], ['y', 900],
+                    ['t', 300], ['t', 200], ['t', 500], ['q', 500], ['y', 500], ['x', 500], ['v', 800],
+                    ['r', 300], ['r', 200], ['q', 500], ['y', 500], ['v', 500], ['t', 900]
+                ]
+            },
+            'Jingle Bells': {
+                emoji: '🔔', notes: [
+                    ['q', 400], ['q', 400], ['q', 800], ['q', 400], ['q', 400], ['q', 800],
+                    ['q', 400], ['t', 400], ['m', 400], ['o', 400], ['q', 1000],
+                    ['r', 400], ['r', 400], ['r', 400], ['r', 400], ['r', 400], ['q', 400], ['q', 400],
+                    ['q', 200], ['q', 200], ['o', 400], ['o', 400], ['q', 400], ['o', 800], ['t', 800]
+                ]
+            },
+            'Ode to Joy': {
+                emoji: '🎼', notes: [
+                    ['q', 400], ['q', 400], ['r', 400], ['t', 400], ['t', 400], ['r', 400], ['q', 400], ['o', 400],
+                    ['m', 400], ['m', 400], ['o', 400], ['q', 400], ['q', 600], ['o', 200], ['o', 800],
+                    ['q', 400], ['q', 400], ['r', 400], ['t', 400], ['t', 400], ['r', 400], ['q', 400], ['o', 400],
+                    ['m', 400], ['m', 400], ['o', 400], ['q', 400], ['o', 600], ['m', 200], ['m', 800]
+                ]
+            },
+            'Mary Had a Lamb': {
+                emoji: '🐑', notes: [
+                    ['q', 400], ['o', 400], ['m', 400], ['o', 400], ['q', 400], ['q', 400], ['q', 800],
+                    ['o', 400], ['o', 400], ['o', 800], ['q', 400], ['t', 400], ['t', 800],
+                    ['q', 400], ['o', 400], ['m', 400], ['o', 400], ['q', 400], ['q', 400], ['q', 400], ['q', 400],
+                    ['o', 400], ['o', 400], ['q', 400], ['o', 400], ['m', 800]
+                ]
+            },
+            'London Bridge': {
+                emoji: '🌉', notes: [
+                    ['t', 400], ['v', 300], ['t', 400], ['r', 400], ['q', 400], ['r', 400], ['t', 600],
+                    ['o', 400], ['q', 400], ['r', 600], ['q', 400], ['r', 400], ['t', 600],
+                    ['t', 400], ['v', 300], ['t', 400], ['r', 400], ['q', 400], ['r', 400], ['t', 600],
+                    ['o', 400], ['t', 400], ['q', 400], ['o', 400], ['m', 800]
+                ]
+            },
+            'Do Re Mi': {
+                emoji: '🎵', notes: [
+                    ['m', 500], ['o', 400], ['q', 500], ['m', 300], ['q', 300], ['m', 300], ['q', 600],
+                    ['o', 500], ['q', 400], ['r', 200], ['r', 200], ['q', 300], ['o', 300], ['r', 600],
+                    ['q', 500], ['r', 400], ['t', 500], ['q', 300], ['t', 300], ['q', 300], ['t', 600],
+                    ['r', 500], ['t', 400], ['v', 200], ['v', 200], ['t', 300], ['r', 300], ['v', 600]
+                ]
+            },
+            'Fur Elise': {
+                emoji: '🎹', notes: [
+                    ['q', 300], ['p', 300], ['q', 300], ['p', 300], ['q', 300], ['l', 300], ['o', 300], ['m', 300],
+                    ['j', 600], ['e', 300], ['h', 300], ['j', 600],
+                    ['l', 300], ['q', 300], ['l', 600], ['l', 300], ['p', 300], ['q', 300],
+                    ['q', 300], ['p', 300], ['q', 300], ['p', 300], ['q', 300], ['l', 300], ['o', 300], ['m', 300],
+                    ['j', 600], ['e', 300], ['h', 300], ['j', 800]
+                ]
+            },
+            'Sa Re Ga Ma': {
+                emoji: '🌺', notes: [
+                    ['m', 500], ['o', 500], ['q', 500], ['r', 500], ['t', 500], ['v', 500], ['x', 500], ['y', 500],
+                    ['y', 500], ['x', 500], ['v', 500], ['t', 500], ['r', 500], ['q', 500], ['o', 500], ['m', 500],
+                    ['m', 300], ['o', 300], ['q', 300], ['r', 300], ['t', 400], ['t', 400],
+                    ['r', 300], ['q', 300], ['o', 300], ['m', 300], ['m', 800]
+                ]
+            },
+            'Row Row Boat': {
+                emoji: '⛵', notes: [
+                    ['m', 600], ['m', 600], ['m', 400], ['o', 200], ['q', 600],
+                    ['q', 400], ['o', 200], ['q', 400], ['r', 200], ['t', 800],
+                    ['y', 200], ['y', 200], ['y', 200], ['t', 200], ['t', 200], ['t', 200], ['q', 200], ['q', 200], ['q', 200], ['m', 200], ['m', 200], ['m', 200],
+                    ['t', 400], ['r', 200], ['q', 400], ['o', 200], ['m', 800]
+                ]
+            }
+        };
+
+        var keyColors = {
+            'a': '#ef4444', 'b': '#f97316', 'c': '#f59e0b', 'd': '#84cc16', 'e': '#22c55e', 'f': '#10b981', 'g': '#14b8a6',
+            'h': '#06b6d4', 'i': '#0ea5e9', 'j': '#3b82f6', 'k': '#6366f1', 'l': '#8b5cf6', 'm': '#a855f7', 'n': '#d946ef',
+            'o': '#ec4899', 'p': '#f43f5e', 'q': '#ef4444', 'r': '#f97316', 's': '#f59e0b', 't': '#84cc16', 'u': '#22c55e',
+            'v': '#10b981', 'w': '#14b8a6', 'x': '#06b6d4', 'y': '#0ea5e9', 'z': '#3b82f6'
+        };
+
+        function renderDemoSongs() {
+            var list = document.getElementById('demoSongsList');
+            if (!list) return;
+            list.innerHTML = '';
+            var names = Object.keys(demoSongs);
+            for (var i = 0; i < names.length; i++) {
+                var name = names[i];
+                var song = demoSongs[name];
+                var pill = document.createElement('span');
+                pill.className = 'song-pill';
+                pill.setAttribute('data-song', name);
+                pill.innerHTML = song.emoji + ' ' + name;
+                list.appendChild(pill);
+            }
+            list.addEventListener('click', function (e) {
+                var pill = e.target.closest('.song-pill');
+                if (pill) selectSong(pill.getAttribute('data-song'));
+            });
+        }
+
+        var selectedSong = '';
+
+        function selectSong(name) {
+            var song = demoSongs[name];
+            if (!song) return;
+            selectedSong = name;
+
+            // Highlight active pill
+            var pills = document.querySelectorAll('.song-pill');
+            for (var i = 0; i < pills.length; i++) {
+                pills[i].classList.remove('selected');
+                if (pills[i].getAttribute('data-song') === name) pills[i].classList.add('selected');
+            }
+
+            // Update title
+            document.getElementById('selectedSongTitle').textContent = song.emoji + ' ' + name;
+
+            // Render big keys
+            var grid = document.getElementById('songKeysGrid');
+            grid.innerHTML = '';
+            for (var i = 0; i < song.notes.length; i++) {
+                var k = song.notes[i][0];
+                var btn = document.createElement('button');
+                btn.className = 'practice-key';
+                btn.textContent = k.toUpperCase();
+                btn.style.background = keyColors[k] || '#6366f1';
+                btn.onclick = (function (key) {
+                    return function () {
+                        var el = document.querySelector('.piano-key[data-key="' + key + '"]');
+                        if (el && keyMap[key]) playPianoNote(keyMap[key], el);
+                    };
+                })(k);
+                grid.appendChild(btn);
+            }
+        }
+
+        window.playSelectedSong = function () {
+            if (selectedSong) playDemoSong(selectedSong);
+        };
+
+        function playDemoSong(name) {
+            stopDemoSong();
+            var song = demoSongs[name];
+            if (!song) return;
+            demoSongPlaying = true;
+            selectSong(name);
+
+            // Show stop, hide play
+            document.getElementById('songPlayBtn').style.display = 'none';
+            document.getElementById('songStopBtn').style.display = 'inline-block';
+
+            var label = document.getElementById('nowPlayingLabel');
+            label.style.display = 'inline';
+            label.textContent = '▶ ' + name;
+
+            var notes = song.notes;
+            var speed = parseFloat(document.getElementById('pianoSpeed').value) || 1;
+            var idx = 0;
+
+            function next() {
+                if (!demoSongPlaying || idx >= notes.length) { stopDemoSong(); return; }
+                var k = notes[idx][0], dur = notes[idx][1] / speed;
+                var el = document.querySelector('.piano-key[data-key="' + k + '"]');
+                if (el && keyMap[k]) playPianoNote(keyMap[k], el);
+                idx++;
+                if (idx < notes.length) highlightNextKey(notes[idx][0]);
+                demoSongTimeout = setTimeout(next, dur);
+            }
+            next();
+        }
+
+        function highlightNextKey(k) {
+            var all = document.querySelectorAll('.piano-key');
+            for (var i = 0; i < all.length; i++) all[i].classList.remove('highlight-next');
+            var el = document.querySelector('.piano-key[data-key="' + k + '"]');
+            if (el) el.classList.add('highlight-next');
+        }
+
+        window.stopDemoSong = function () {
+            demoSongPlaying = false;
+            if (demoSongTimeout) { clearTimeout(demoSongTimeout); demoSongTimeout = null; }
+            var pills = document.querySelectorAll('.song-pill');
+            for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
+            var all = document.querySelectorAll('.piano-key');
+            for (var i = 0; i < all.length; i++) all[i].classList.remove('highlight-next');
+            var label = document.getElementById('nowPlayingLabel');
+            if (label) { label.style.display = 'none'; label.textContent = ''; }
+            // Show play, hide stop
+            var playBtn = document.getElementById('songPlayBtn');
+            var stopBtn = document.getElementById('songStopBtn');
+            if (playBtn) playBtn.style.display = 'inline-block';
+            if (stopBtn) stopBtn.style.display = 'none';
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderDemoSongs();
+            // Auto-select first song
+            var firstSong = Object.keys(demoSongs)[0];
+            if (firstSong) selectSong(firstSong);
+        });
+    </script>
+    <script type="module" src="script.js"></script>
+    <!-- Floating Chat Button -->
+    <button id="openChatBtn"
+        class="fixed bottom-4 right-4 w-14 h-14 rounded-full shadow-lg text-white text-2xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-110 transition z-50">
+        💬
+    </button>
+
+    <!-- Chat Canvas (Vertical full screen height) -->
+    <div id="chatCanvas"
+        class="fixed bottom-0 right-0 w-full sm:w-[450px] h-[85vh] bg-white shadow-2xl rounded-tl-2xl border-t-4 border-indigo-600 flex flex-col z-50 translate-y-full transition-transform duration-500">
+        <div
+            class="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-tl-2xl">
+            <span class="text-base font-semibold">External Chat</span>
+            <button id="closeChatBtn" class="text-sm ml-2">✖</button>
+        </div>
+        <div id="chatMessages" class="flex-1 p-4 overflow-y-auto flex flex-col space-y-2"
+            onclick="event.stopPropagation()">
+            <!-- messages go here -->
+        </div>
+        <div class="p-4 border-t bg-gray-50" onclick="event.stopPropagation()">
+            <textarea id="chatMessage" placeholder="Type your message..." rows="2"
+                class="w-full px-3 py-2 border rounded-md"></textarea>
+            <button id="sendChatBtn"
+                class="mt-2 w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">Send</button>
+        </div>
+    </div>
+
+    <!-- Chat logic is now handled by Firebase in script.js -->
+    <!-- Incentive Calculator Modal -->
+    <div class="incentive-modal" id="incentiveModal">
+        <div class="incentive-modal-content">
+            <h2 class="title">🎯 Incentive Calculator</h2>
+
+            <!-- CSAT -->
+            <div class="input-section">
+                <label for="incentiveCSAT">CSAT %:</label>
+                <select id="incentiveCSAT">
+                    <!-- 70 से 99% तक -->
+                    <script>
+                        for (let i = 70; i <= 99; i++) {
+                            document.write(`<option value="${i}">${i}%</option>`);
+                        }
+                    </script>
+                </select>
+            </div>
+
+            <!-- Quality -->
+            <div class="input-section">
+                <label for="incentiveQuality">Quality %:</label>
+                <select id="incentiveQuality">
+                    <script>
+                        for (let i = 40; i <= 100; i += 5) {
+                            document.write(`<option value="${i}">${i}%</option>`);
+                        }
+                    </script>
+                </select>
+            </div>
+
+            <!-- AHT -->
+            <div class="input-section">
+                <label for="incentiveAHTMin">AHT (Minutes:Seconds):</label>
+                <select id="incentiveAHTMin"></select> :
+                <select id="incentiveAHTSec"></select>
+            </div>
+
+            <!-- Step 4: Absenteeism Days -->
+            <div class="input-section">
+                <label for="incentiveAbsent">Absenteeism Days:</label>
+                <select id="incentiveAbsent"></select>
+            </div>
+
+            <!-- Result -->
+            <div class="result-section" id="incentiveResult">
+                <p id="incentiveResult"><span class="colorful-text">Created by Shivang</span></p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-container">
+                <button class="close-btn" onclick="closeIncentiveModal()">Close</button>
+                <button class="calculate-btn" onclick="calculateIncentive()">Calculate</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="incentive-modal" id="scorecardModal">
+        <div class="incentive-modal-content scorecard-modal-content">
+            <h2 class="title"
+                style="background: linear-gradient(135deg, #0d9488, #0f766e); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; margin-bottom: 20px;">
+                📊 AGENT SCORECARD</h2>
+
+            <div class="scorecard-layout">
+                <!-- Left Side: Inputs -->
+                <div class="scorecard-inputs">
+                    <!-- Tenure -->
+                    <div class="input-section">
+                        <label for="scTenure">Tenure (Months):</label>
+                        <select id="scTenure" style="border: 2px solid #0d9488;">
+                            <option value="0-3">0-3 Months</option>
+                            <option value="3-6">3-6 Months</option>
+                            <option value="6+">6+ Months</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <!-- Calling CSAT -->
+                        <div class="input-section" style="flex: 1;">
+                            <label for="scCallCSAT">Calling CSAT %:</label>
+                            <select id="scCallCSAT"></select>
+                        </div>
+                        <!-- Ticket CSAT -->
+                        <div class="input-section" style="flex: 1;">
+                            <label for="scTicketCSAT">Ticket CSAT %:</label>
+                            <select id="scTicketCSAT"></select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <!-- Quality -->
+                        <div class="input-section" style="flex: 1;">
+                            <label for="scQuality">Quality %:</label>
+                            <select id="scQuality"></select>
+                        </div>
+                        <!-- Internal Audit -->
+                        <div class="input-section" style="flex: 1;">
+                            <label for="scAudit">Internal Audit %:</label>
+                            <select id="scAudit"></select>
+                        </div>
+                    </div>
+
+                    <!-- AHT -->
+                    <div class="input-section">
+                        <label for="scAHTMin">AHT (Min:Sec):</label>
+                        <div style="display: flex; gap: 5px; align-items: center;">
+                            <select id="scAHTMin" style="flex: 1;"></select> :
+                            <select id="scAHTSec" style="flex: 1;"></select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <!-- Late Login -->
+                        <div class="input-section" style="flex: 1;">
+                            <label for="scLateLogin">Late Login (Days):</label>
+                            <select id="scLateLogin"></select>
+                        </div>
+                        <!-- Login Hour -->
+                        <div class="input-section" style="flex: 1;">
+                            <label for="scLoginHrs">Login (Hrs:Min):</label>
+                            <div style="display: flex; gap: 5px; align-items: center;">
+                                <select id="scLoginHrs" style="flex: 1;"></select> :
+                                <select id="scLoginMins" style="flex: 1;"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Display and Buttons -->
+                <div class="scorecard-outputs">
+                    <!-- Result -->
+                    <div class="result-section" id="scorecardResult"
+                        style="background:#f0fdfa; border:1px solid #99f6e4; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <p><span class="colorful-text">Created by Shivang</span></p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="button-container scorecard-buttons">
+                        <button class="close-btn" onclick="closeScorecardModal()"
+                            style="background:#ef4444;">Close</button>
+                        <button class="calculate-btn" onclick="calculateScorecard()"
+                            style="background:#0d9488;">Calculate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 🌟 PB Wheels Popup -->
+    <div id="pbPopup" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 hidden">
+        <div
+            class="bg-white max-w-4xl w-11/12 md:w-3/4 rounded-2xl shadow-2xl relative p-8 overflow-y-auto max-h-[90vh] border border-indigo-200">
+
+            <!-- ❌ Close Button -->
+            <button id="closePopupBtn"
+                class="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+
+            <!-- 🏁 Title -->
+            <h2
+                class="text-3xl font-extrabold text-center bg-gradient-to-r from-indigo-600 to-blue-400 bg-clip-text text-transparent mb-6">
+                PB Wheels - Script
+            </h2>
+
+            <!-- 📘 ENGLISH SCRIPT -->
+            <div class="mb-8 text-gray-800 leading-relaxed space-y-4">
+                <h3 class="text-2xl font-bold text-indigo-700 border-b-2 border-indigo-300 inline-block mb-3">ENGLISH
+                    SCRIPT</h3>
+
+                <p><strong>Main Script:</strong></p>
+                <p>Sharing a quick offer that could help you save up to <span class="text-green-600 font-semibold">40%
+                        on your next car service</span> — may I take 30 seconds to explain?</p>
+                <p>We’re currently running a <span class="font-semibold text-indigo-700">special service program</span>
+                    with our partner garage network where you get a <strong>free car health check-up</strong>, and if
+                    you go ahead with servicing, we complete it within just <strong>60 minutes</strong> (excluding
+                    washing).</p>
+                <p>The best part — our customers are saving up to <span class="text-green-600 font-semibold">40%</span>
+                    compared to branded workshops with genuine parts, trained technicians, and complete warranty on
+                    service quality.</p>
+                <p><em>(Add Value Hook)</em> You also get updates at every step, and we even offer <strong>free pickup &
+                        drop</strong> for select services — so you don’t have to spend your day waiting at the garage.
+                </p>
+                <p class="text-indigo-600 font-semibold">(Closing CTA) Would you like me to schedule a call back with
+                    our garage servicing team?</p>
+                <p>Also, please help me with your last car service month and year, and if you remember your odometer
+                    reading, please share that too.</p>
+
+                <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
+                    <p><strong>If customer says “No”:</strong></p>
+                    <p><em>Savings Hook (Money Angle)</em> — Understood, Sir/Ma’am. Just letting you know — most of our
+                        customers switched because they were spending 30–40% more at their old workshop for the same
+                        quality.</p>
+                    <p>The free car health check-up alone helps spot issues early and costs nothing — would you like me
+                        to just book that for you?</p>
+                </div>
+
+                <div class="bg-indigo-50 p-3 rounded-lg border-l-4 border-indigo-400">
+                    <p><strong>If customer says “No” again:</strong></p>
+                    <p>Totally fine, Sir/Ma’am. If you ever plan a service in the future, do keep our garage network in
+                        mind — we offer up to 40% savings and 1-hour quick service with a free car health check-up.</p>
+                    <p>You can reach us anytime on our toll-free number. Thank you for your time!</p>
+                </div>
+            </div>
+
+            <!-- 📙 HINDI SCRIPT -->
+            <div class="text-gray-800 leading-relaxed space-y-4">
+                <h3 class="text-2xl font-bold text-orange-700 border-b-2 border-orange-300 inline-block mb-3">HINDI
+                    SCRIPT</h3>
+
+                <p><strong>Main Script:</strong></p>
+                <p>“<span class="text-orange-600 font-semibold">नमस्कार!</span> हमारे पास आपके लिए एक <strong>विशेष
+                        ऑफर</strong> है। हमारे पार्टनर गैराज में आपको <strong>फ्री कार हेल्थ चेकअप</strong> मिलेगा, और
+                    अगर आप सर्विस कराते हैं, तो हम उसे सिर्फ <strong>1 घंटे</strong> में पूरा करेंगे।”</p>
+                <p>“हमारे ग्राहक <span class="text-green-600 font-semibold">30–40%</span> तक बचत कर रहे हैं। यहाँ आपको
+                    मिलेंगे <strong>genuine parts</strong>, <strong>trained technicians</strong>, और <strong>service
+                        warranty</strong>। साथ ही, <strong>free pickup & drop</strong> की सुविधा भी है।”</p>
+                <p>“क्या मैं आपके लिए <strong>callback</strong> शेड्यूल कर सकता हूँ?”</p>
+
+                <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-400">
+                    <p><strong>अगर ग्राहक “ना” कहे:</strong></p>
+                    <p>“ठीक है सर/मैम। हमारे अधिकतर ग्राहक पहले 30–40% ज़्यादा खर्च कर रहे थे, इसलिए उन्होंने हमारी सेवा
+                        ली। फ्री कार हेल्थ चेकअप से हम आपकी कार की दिक्कतें पहले ही पता कर सकते हैं।”</p>
+                    <p>“क्या मैं आपके लिए यह बुक कर सकता हूँ?”</p>
+                </div>
+
+                <div class="bg-yellow-50 p-3 rounded-lg border-l-4 border-yellow-400">
+                    <p><strong>अगर ग्राहक फिर “ना” कहे:</strong></p>
+                    <p>“कोई बात नहीं सर/मैम। भविष्य में जब भी आपको सर्विस की ज़रूरत हो, हमारे गैराज नेटवर्क को याद रखें।
+                        हम 40% तक बचत और 1 घंटे की त्वरित सर्विस के साथ फ्री हेल्थ चेकअप ऑफर करते हैं।”</p>
+                    <p>“आप हमें कभी भी हमारे टोल-फ्री नंबर पर संपर्क कर सकते हैं। धन्यवाद!”</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- 🎮 Memory Card Game Modal -->
+    <div class="memory-game-overlay" id="memoryGameOverlay">
+        <div class="memory-game-container">
+            <div class="memory-game-header">
+                <h2>🧠 Memory Card Game</h2>
+                <p class="memory-game-subtitle">Match the pairs to win!</p>
+            </div>
+            <div class="memory-game-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Moves</span>
+                    <span class="stat-value" id="moveCount">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Pairs</span>
+                    <span class="stat-value" id="pairCount">0/8</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Time</span>
+                    <span class="stat-value" id="gameTimer">0:00</span>
+                </div>
+            </div>
+            <div class="memory-game-board" id="gameBoard">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+            <div class="memory-game-buttons">
+                <button class="mem-btn mem-btn-restart" onclick="restartMemoryGame()">🔄 Restart</button>
+                <button class="mem-btn mem-btn-close" onclick="closeMemoryGame()">✖ Close</button>
+            </div>
+            <!-- Win Message -->
+            <div class="memory-win-message" id="winMessage">
+                <h3>🎉 Congratulations!</h3>
+                <p id="winStats">You won!</p>
+                <button class="mem-btn mem-btn-restart" onclick="restartMemoryGame()">🔄 Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- � Custom High Score Prompt Modal -->
+    <div class="memory-game-overlay" id="highScorePromptOverlay" style="z-index: 10000;">
+        <div class="memory-game-container" style="max-width: 400px; text-align: center;">
+            <div class="memory-game-header">
+                <h2 class="text-3xl">🎉 New High Score!</h2>
+                <p class="memory-game-subtitle text-gray-300 mt-2">You made it to the Top 3!</p>
+            </div>
+            <div class="my-6">
+                <p class="text-white text-xl mb-4">Score: <span id="newHighScoreValue"
+                        class="text-yellow-400 font-bold text-2xl">0</span></p>
+                <input type="text" id="highScoreNameInput"
+                    class="w-full px-4 py-3 bg-gray-900 border-2 border-indigo-500 rounded-lg text-white font-bold text-center text-xl focus:outline-none focus:border-purple-500 transition-colors"
+                    placeholder="Enter Your Name" maxlength="15" autocomplete="off">
+            </div>
+            <div class="memory-game-buttons">
+                <button
+                    class="mem-btn mem-btn-restart bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 w-full"
+                    id="submitHighScoreBtn">Sumbit Score 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎮 Game Hub Modal -->
+    <div class="memory-game-overlay" id="gameHubOverlay">
+        <div class="memory-game-container game-hub-container" style="max-width: 700px;">
+            <div class="memory-game-header">
+                <h2>🎮 Welcome to Game Hub</h2>
+                <p class="memory-game-subtitle">Take a quick break and play!</p>
+            </div>
+            <div class="game-hub-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <button class="game-select-btn bg-gradient-to-r from-purple-500 to-indigo-600"
+                    onclick="launchGame('memory')">
+                    <span class="text-3xl">🧠</span>
+                    <span>Memory Card</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-green-500 to-teal-600"
+                    onclick="launchGame('snake')">
+                    <span class="text-3xl">🐍</span>
+                    <span>Snake Game</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-yellow-500 to-orange-600"
+                    onclick="launchGame('reaction')">
+                    <span class="text-3xl">⚡</span>
+                    <span>Reaction Time</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-red-500 to-rose-600" onclick="launchGame('whack')">
+                    <span class="text-3xl">🔨</span>
+                    <span>Whack-a-Mole</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-blue-500 to-cyan-600"
+                    onclick="launchGame('bounce')">
+                    <span class="text-3xl">🎾</span>
+                    <span>Bounce Ball</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-pink-500 to-fuchsia-600"
+                    onclick="launchGame('stars')">
+                    <span class="text-3xl">✨</span>
+                    <span>Falling Stars</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-orange-500 to-red-600" onclick="launchGame('aim')">
+                    <span class="text-3xl">🎯</span>
+                    <span>Aim Trainer</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-sky-500 to-blue-700"
+                    onclick="launchGame('flappy')">
+                    <span class="text-3xl">🐦</span>
+                    <span>Flappy Bird</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-violet-500 to-pink-600"
+                    onclick="launchGame('colormatch')">
+                    <span class="text-3xl">🎨</span>
+                    <span>Color Match</span>
+                </button>
+                <button class="game-select-btn bg-gradient-to-r from-slate-600 to-gray-900"
+                    onclick="launchGame('airforce')">
+                    <span class="text-3xl">✈️</span>
+                    <span>Air Force</span>
+                </button>
+            </div>
+            <div class="memory-game-buttons mt-6">
+                <button class="mem-btn mem-btn-close w-full" onclick="closeGameHub()">✖ Close Hub</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🐍 Snake Game Modal -->
+    <div class="memory-game-overlay" id="snakeGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>🐍 Snake Game</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <!-- Left: Canvas -->
+                <div class="game-canvas-container flex justify-center relative" onclick="toggleSnakePause()"
+                    style="cursor: pointer;">
+                    <canvas id="snakeCanvas" width="500" height="500"
+                        class="bg-gray-900 border-2 border-green-500 rounded-lg shadow-lg"
+                        style="max-width:100%; height:auto;"></canvas>
+                    <div id="snakePauseOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center rounded-lg pointer-events-none hidden">
+                        <span class="text-white text-3xl font-bold text-center">PAUSED<br><span
+                                class="text-sm font-normal">Click or SPACE</span></span>
+                    </div>
+                    <div id="snakeGameOverOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                        style="backdrop-filter: blur(2px);">
+                        <h3 class="text-red-500 text-4xl font-bold mb-2">GAME OVER</h3>
+                        <p class="text-white text-xl mb-4">Score: <span id="snakeFinalScore"
+                                class="text-green-400 font-bold">0</span></p>
+                        <button class="mem-btn mem-btn-restart bg-green-600 hover:bg-green-700 px-6 py-2"
+                            onclick="event.stopPropagation(); startSnakeGame()">🔄 Play Again</button>
+                    </div>
+                </div>
+                <!-- Right: Sidebar -->
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-3">
+                        <span class="text-white font-bold text-sm">Score: <span id="snakeScore"
+                                class="text-green-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="snakeHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">Press <b>SPACE</b> to Pause/Resume.<br>Hold Arrow Keys for
+                        Speed Burst!</p>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Scores</h4>
+                        <ul id="snakeLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-green-600 hover:bg-green-700 w-full"
+                            onclick="startSnakeGame()">▶️ Play</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('snakeGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⚡ Reaction Time Modal -->
+    <div class="memory-game-overlay" id="reactionGameOverlay">
+        <div class="memory-game-container">
+            <div class="memory-game-header">
+                <h2>⚡ Reaction Time</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+                <p class="memory-game-subtitle text-gray-300 mt-1">Wait for green, then click!</p>
+            </div>
+            <div id="reactionArea"
+                class="reaction-area bg-red-500 w-full h-48 rounded-xl flex items-center justify-center text-white text-2xl font-bold cursor-pointer transition-colors shadow-inner my-4"
+                onclick="handleReactionClick()">
+                Click to Start
+            </div>
+            <p id="reactionResult" class="text-center text-white text-xl font-mono mb-4 h-8"></p>
+
+            <div class="leaderboard-section mt-4 p-3 bg-gray-800 rounded-xl border border-gray-700">
+                <h4 class="text-center text-yellow-400 font-bold mb-2 flex justify-center items-center gap-2">🏆 Top 3
+                    Fastest (ms)</h4>
+                <ul id="reactionLeaderboardList" class="leaderboard-list">
+                    <li class="text-center text-gray-400 text-sm">Loading scores...</li>
+                </ul>
+            </div>
+            <div class="memory-game-buttons mt-4">
+                <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700"
+                    onclick="backToHub('reactionGameOverlay')">⬅ Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔨 Whack-a-Mole Modal -->
+    <div class="memory-game-overlay" id="whackGameOverlay">
+        <div class="memory-game-container">
+            <div class="memory-game-header">
+                <h2>🔨 Whack-a-Mole</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+                <div class="flex justify-between px-4 mt-2">
+                    <span class="text-white font-bold">Score: <span id="whackScore"
+                            class="text-orange-400">0</span></span>
+                    <span class="text-white font-bold">Time: <span id="whackTime" class="text-red-400">30s</span></span>
+                </div>
+            </div>
+            <div class="whack-grid grid grid-cols-3 gap-3 my-4 p-4 bg-green-800 rounded-xl border-4 border-amber-900">
+                <!-- 9 Holes -->
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(0)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-0"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(1)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-1"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(2)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-2"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(3)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-3"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(4)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-4"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(5)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-5"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(6)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-6"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(7)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-7"></div>
+                </div>
+                <div class="hole relative h-20 w-20 bg-amber-950 rounded-[50%] mx-auto overflow-hidden border-b-4 border-black"
+                    onclick="whackMole(8)">
+                    <div class="mole absolute bottom-[-100%] w-full h-full bg-[url('https://cdn-icons-png.flaticon.com/512/3069/3069153.png')] bg-contain bg-no-repeat bg-bottom transition-all duration-300 pointer-events-none"
+                        id="mole-8"></div>
+                </div>
+            </div>
+
+            <div class="leaderboard-section mt-4 p-3 bg-gray-800 rounded-xl border border-gray-700">
+                <h4 class="text-center text-yellow-400 font-bold mb-2 flex justify-center items-center gap-2">🏆 Top 3
+                    Whackers</h4>
+                <ul id="whackLeaderboardList" class="leaderboard-list">
+                    <li class="text-center text-gray-400 text-sm">Loading scores...</li>
+                </ul>
+            </div>
+            <div class="memory-game-buttons mt-4">
+                <button class="mem-btn mem-btn-restart bg-orange-600 hover:bg-orange-700" onclick="startWhackGame()">▶️
+                    Start</button>
+                <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700"
+                    onclick="backToHub('whackGameOverlay')">⬅ Back</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 🎾 Bounce Ball Modal -->
+    <div class="memory-game-overlay" id="bounceGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>🎾 Bounce Ball</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <div class="game-canvas-container flex justify-center relative" onclick="toggleBouncePause()"
+                    style="cursor: pointer;">
+                    <canvas id="bounceCanvas" width="500" height="500"
+                        class="bg-gray-900 border-2 border-cyan-500 rounded-lg shadow-lg"
+                        style="max-width:100%; height:auto;"></canvas>
+                    <div id="bouncePauseOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center rounded-lg pointer-events-none hidden">
+                        <span class="text-white text-3xl font-bold text-center">PAUSED<br><span
+                                class="text-sm font-normal">Click or SPACE</span></span>
+                    </div>
+                    <div id="bounceGameOverOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                        style="backdrop-filter: blur(2px);">
+                        <h3 class="text-red-500 text-4xl font-bold mb-2">GAME OVER</h3>
+                        <p class="text-white text-xl mb-4">Score: <span id="bounceFinalScore"
+                                class="text-cyan-400 font-bold">0</span></p>
+                        <button class="mem-btn mem-btn-restart bg-cyan-600 hover:bg-cyan-700 px-6 py-2"
+                            onclick="event.stopPropagation(); startBounceGame()">🔄 Play Again</button>
+                    </div>
+                </div>
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-3">
+                        <span class="text-white font-bold text-sm">Score: <span id="bounceScore"
+                                class="text-cyan-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="bounceHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">Keep the ball bouncing!<br>Arrow Keys or Mouse to move
+                        paddle.<br>Press <b>SPACE</b> to Pause.</p>
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-300 font-bold mb-1 text-center">🎯 Select Level</p>
+                        <div class="flex gap-1">
+                            <button id="bounceEasyBtn"
+                                class="flex-1 px-2 py-1 text-xs font-bold rounded-lg bg-green-600 hover:bg-green-700 text-white transition-all ring-2 ring-green-400"
+                                onclick="event.stopPropagation(); setBounceLevel('easy')">Easy</button>
+                            <button id="bounceMediumBtn"
+                                class="flex-1 px-2 py-1 text-xs font-bold rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white transition-all ring-0"
+                                onclick="event.stopPropagation(); setBounceLevel('medium')">Medium</button>
+                            <button id="bounceHardBtn"
+                                class="flex-1 px-2 py-1 text-xs font-bold rounded-lg bg-red-600 hover:bg-red-700 text-white transition-all ring-0"
+                                onclick="event.stopPropagation(); setBounceLevel('hard')">Hard</button>
+                        </div>
+                        <p class="text-xs text-center mt-1" id="bounceLevelInfo" style="color: #4ade80;">Easy — 1x pts
+                        </p>
+                    </div>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Scores</h4>
+                        <ul id="bounceLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-cyan-600 hover:bg-cyan-700 w-full"
+                            onclick="startBounceGame()">▶️ Play</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('bounceGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- ✨ Falling Stars Modal -->
+    <div class="memory-game-overlay" id="starsGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>✨ Falling Stars</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <div class="game-canvas-container flex justify-center relative" onclick="toggleStarsPause()"
+                    style="cursor: pointer;">
+                    <canvas id="starsCanvas" width="500" height="500"
+                        class="bg-gray-900 border-2 border-pink-500 rounded-lg shadow-lg"
+                        style="max-width:100%; height:auto;"></canvas>
+                    <div id="starsPauseOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center rounded-lg pointer-events-none hidden">
+                        <span class="text-white text-3xl font-bold text-center">PAUSED<br><span
+                                class="text-sm font-normal">Click or SPACE</span></span>
+                    </div>
+                    <div id="starsGameOverOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                        style="backdrop-filter: blur(2px);">
+                        <h3 class="text-red-500 text-4xl font-bold mb-2">GAME OVER</h3>
+                        <p class="text-white text-xl mb-4">Score: <span id="starsFinalScore"
+                                class="text-pink-400 font-bold">0</span></p>
+                        <button class="mem-btn mem-btn-restart bg-pink-600 hover:bg-pink-700 px-6 py-2"
+                            onclick="event.stopPropagation(); startStarsGame()">🔄 Try Again</button>
+                    </div>
+                </div>
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">Score: <span id="starsScore"
+                                class="text-pink-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="starsHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <p class="text-red-400 font-bold text-sm mb-2" id="starsLives">Lives: 💖💖💖</p>
+                    <p class="text-xs text-gray-400 mb-3">Catch ✨ Stars, avoid 🔴 Bombs!<br>Mouse or tap to move basket.
+                    </p>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Catchers</h4>
+                        <ul id="starsLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-pink-600 hover:bg-pink-700 w-full"
+                            onclick="startStarsGame()">▶️ Start</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('starsGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎯 Aim Trainer Modal -->
+    <div class="memory-game-overlay" id="aimGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>🎯 Aim Trainer</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <div class="game-canvas-container flex justify-center relative">
+                    <canvas id="aimCanvas" width="500" height="500"
+                        class="bg-gray-900 border-2 border-orange-500 rounded-lg shadow-lg"
+                        style="max-width:100%; height:auto; cursor: crosshair;"></canvas>
+                    <div id="aimGameOverOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                        style="backdrop-filter: blur(2px);">
+                        <h3 class="text-red-500 text-4xl font-bold mb-2">TIME'S UP!</h3>
+                        <p class="text-white text-lg mb-1">Score: <span id="aimFinalScore"
+                                class="text-orange-400 font-bold">0</span></p>
+                        <p class="text-white text-lg mb-4">Accuracy: <span id="aimFinalAccuracy"
+                                class="text-green-400 font-bold">0%</span></p>
+                        <button class="mem-btn mem-btn-restart bg-orange-600 hover:bg-orange-700 px-6 py-2"
+                            onclick="event.stopPropagation(); startAimGame()">🔄 Play Again</button>
+                    </div>
+                </div>
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">Score: <span id="aimScore"
+                                class="text-orange-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="aimHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">⏱ Time: <span id="aimTimer"
+                                class="text-red-400">30</span>s</span>
+                        <span class="text-white font-bold text-sm">🎯 <span id="aimAccuracy"
+                                class="text-green-400">0%</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">⚡ Targets disappear in 1.5s!<br>
+                        Miss = <span class="text-red-400">-3 pts</span> penalty.<br>
+                        Smaller target = More points.<br>
+                        Gets harder as you score! 🔥</p>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Scores</h4>
+                        <ul id="aimLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-orange-600 hover:bg-orange-700 w-full"
+                            onclick="startAimGame()">▶️ Play</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('aimGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🐦 Flappy Bird Modal -->
+    <div class="memory-game-overlay" id="flappyGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>🐦 Flappy Bird</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <div class="game-canvas-container flex justify-center relative" onclick="flappyFlap()">
+                    <canvas id="flappyCanvas" width="500" height="500"
+                        class="bg-gray-900 border-2 border-sky-500 rounded-lg shadow-lg"
+                        style="max-width:100%; height:auto; cursor: pointer;"></canvas>
+                    <div id="flappyGameOverOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                        style="backdrop-filter: blur(2px);">
+                        <h3 class="text-red-500 text-4xl font-bold mb-2">GAME OVER</h3>
+                        <p class="text-white text-xl mb-4">Score: <span id="flappyFinalScore"
+                                class="text-sky-400 font-bold">0</span></p>
+                        <button class="mem-btn mem-btn-restart bg-sky-600 hover:bg-sky-700 px-6 py-2"
+                            onclick="event.stopPropagation(); startFlappyGame()">🔄 Play Again</button>
+                    </div>
+                    <div id="flappyStartOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center rounded-lg"
+                        style="backdrop-filter: blur(2px);">
+                        <span class="text-white text-3xl font-bold mb-2">🐦 TAP TO FLY</span>
+                        <span class="text-gray-300 text-sm">Click or press SPACE</span>
+                    </div>
+                </div>
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-3">
+                        <span class="text-white font-bold text-sm">Score: <span id="flappyScore"
+                                class="text-sky-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="flappyHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">Tap/Click/Space to fly up!<br>
+                        Avoid the pipes.<br>
+                        Each pipe = <b>+1 point</b>.</p>
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-300 font-bold mb-1 text-center">🎯 Select Level</p>
+                        <div class="flex gap-1">
+                            <button id="flappyEasyBtn"
+                                class="flex-1 px-2 py-1 text-xs font-bold rounded-lg bg-green-600 hover:bg-green-700 text-white transition-all ring-0"
+                                onclick="event.stopPropagation(); setFlappyLevel('easy')">Easy</button>
+                            <button id="flappyMediumBtn"
+                                class="flex-1 px-2 py-1 text-xs font-bold rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white transition-all ring-2 ring-yellow-400"
+                                onclick="event.stopPropagation(); setFlappyLevel('medium')">Medium</button>
+                            <button id="flappyHardBtn"
+                                class="flex-1 px-2 py-1 text-xs font-bold rounded-lg bg-red-600 hover:bg-red-700 text-white transition-all ring-0"
+                                onclick="event.stopPropagation(); setFlappyLevel('hard')">Hard</button>
+                        </div>
+                        <p class="text-xs text-center mt-1" id="flappyLevelInfo" style="color: #facc15;">Medium</p>
+                    </div>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Scores</h4>
+                        <ul id="flappyLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-sky-600 hover:bg-sky-700 w-full"
+                            onclick="startFlappyGame()">▶️ Play</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('flappyGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎨 Color Match Modal -->
+    <div class="memory-game-overlay" id="colormatchGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>🎨 Color Match</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <div class="game-canvas-container flex justify-center relative">
+                    <div id="colorMatchArea"
+                        class="w-full bg-gray-900 border-2 border-violet-500 rounded-lg shadow-lg flex flex-col items-center justify-center"
+                        style="min-height: 400px; max-width: 500px;">
+                        <p class="text-gray-400 text-sm mb-2" id="colorMatchInstruction">What COLOR is the word
+                            displayed in?</p>
+                        <div id="colorWord" class="text-6xl font-black mb-8 select-none"
+                            style="color: #ef4444; text-shadow: 0 0 20px rgba(0,0,0,0.5);">RED</div>
+                        <div class="grid grid-cols-2 gap-3 w-full px-6" id="colorButtons">
+                            <button
+                                class="color-match-btn rounded-xl py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+                                style="background: #ef4444;" onclick="pickColor('red')">RED</button>
+                            <button
+                                class="color-match-btn rounded-xl py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+                                style="background: #3b82f6;" onclick="pickColor('blue')">BLUE</button>
+                            <button
+                                class="color-match-btn rounded-xl py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+                                style="background: #22c55e;" onclick="pickColor('green')">GREEN</button>
+                            <button
+                                class="color-match-btn rounded-xl py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+                                style="background: #eab308;" onclick="pickColor('yellow')">YELLOW</button>
+                        </div>
+                        <div id="colorMatchGameOver"
+                            class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                            style="backdrop-filter: blur(2px);">
+                            <h3 class="text-red-500 text-4xl font-bold mb-2">TIME'S UP!</h3>
+                            <p class="text-white text-lg mb-1">Score: <span id="colorMatchFinalScore"
+                                    class="text-violet-400 font-bold">0</span></p>
+                            <p class="text-white text-lg mb-4">Accuracy: <span id="colorMatchFinalAccuracy"
+                                    class="text-green-400 font-bold">0%</span></p>
+                            <button class="mem-btn mem-btn-restart bg-violet-600 hover:bg-violet-700 px-6 py-2"
+                                onclick="startColorMatchGame()">🔄 Play Again</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">Score: <span id="colorMatchScore"
+                                class="text-violet-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="colorMatchHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">⏱ <span id="colorMatchTimer"
+                                class="text-red-400">30</span>s</span>
+                        <span class="text-white font-bold text-sm">🔥 Streak: <span id="colorMatchStreak"
+                                class="text-orange-400">0</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">Word dikha hai ek color me —<br>
+                        <b>Wo COLOR select karo</b> jis me word<br>
+                        likha hai, word padho mat!<br>
+                        Streak bonus: 3+ = <span class="text-green-400">2x pts</span>!
+                    </p>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Scores</h4>
+                        <ul id="colormatchLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-violet-600 hover:bg-violet-700 w-full"
+                            onclick="startColorMatchGame()">▶️ Play</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('colormatchGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✈️ Air Force Shooter Game Modal -->
+    <div class="memory-game-overlay" id="airforceGameOverlay">
+        <div class="memory-game-container game-side-layout" style="max-width: 900px;">
+            <div class="memory-game-header">
+                <h2>✈️ Air Force Shooter</h2>
+                <p class="memory-game-subtitle text-xs text-gray-400">Created by Shivang</p>
+            </div>
+            <div class="game-row-layout">
+                <!-- Left: Canvas -->
+                <div class="game-canvas-container flex justify-center relative">
+                    <canvas id="airforceCanvas" width="480" height="600"
+                        class="bg-gray-900 border-2 border-cyan-500 rounded-lg shadow-lg"
+                        style="max-width:100%; height:auto;"></canvas>
+                    <!-- Game Over Overlay -->
+                    <div id="airforceGameOverOverlay"
+                        class="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center rounded-lg hidden"
+                        style="backdrop-filter: blur(3px);">
+                        <h3 class="text-red-500 text-4xl font-bold mb-2">MISSION FAILED</h3>
+                        <p class="text-white text-lg mb-1">Score: <span id="airforceFinalScore"
+                                class="text-cyan-400 font-bold">0</span></p>
+                        <p class="text-white text-sm mb-1">Level: <span id="airforceFinalLevel"
+                                class="text-yellow-400 font-bold">1</span></p>
+                        <p class="text-white text-sm mb-4">Enemies Destroyed: <span id="airforceFinalKills"
+                                class="text-red-400 font-bold">0</span></p>
+                        <button class="mem-btn mem-btn-restart bg-cyan-600 hover:bg-cyan-700 px-6 py-2"
+                            onclick="startAirforceGame()">🔄 Fly Again</button>
+                    </div>
+                    <!-- Start Screen -->
+                    <div id="airforceStartScreen"
+                        class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center rounded-lg"
+                        style="backdrop-filter: blur(2px);">
+                        <p class="text-5xl mb-3">✈️</p>
+                        <h3 class="text-cyan-400 text-2xl font-bold mb-2">AIR FORCE SHOOTER</h3>
+                        <p class="text-gray-300 text-sm mb-4 text-center px-4">Arrow keys / WASD to move<br>SPACE to
+                            shoot<br>Destroy enemies, collect power-ups!</p>
+                        <button class="mem-btn mem-btn-restart bg-cyan-600 hover:bg-cyan-700 px-8 py-3 text-lg"
+                            onclick="startAirforceGame()">🚀 START MISSION</button>
+                    </div>
+                </div>
+                <!-- Right: Sidebar -->
+                <div class="game-sidebar">
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">Score: <span id="airforceScore"
+                                class="text-cyan-400">0</span></span>
+                        <span class="text-white font-bold text-sm">Best: <span id="airforceHighScore"
+                                class="text-yellow-400">0</span></span>
+                    </div>
+                    <div class="flex justify-between px-2 mb-2">
+                        <span class="text-white font-bold text-sm">❤️ <span id="airforceLives"
+                                class="text-red-400">3</span></span>
+                        <span class="text-white font-bold text-sm">Level: <span id="airforceLevel"
+                                class="text-orange-400">1</span></span>
+                    </div>
+                    <div class="px-2 mb-3">
+                        <span class="text-white font-bold text-sm">Rank: <span id="airforceRank"
+                                class="text-green-400">Cadet</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">
+                        <b>Move:</b> Arrow / WASD<br>
+                        <b>Shoot:</b> SPACE (auto-fire ON)<br>
+                        <b>Power-ups:</b><br>
+                        🛡️ Shield · ⚡ Rapid Fire · 💣 Bomb<br>
+                        🧲 Magnet · ❤️ Extra Life
+                    </p>
+                    <div class="leaderboard-section p-3 bg-gray-800 rounded-xl border border-gray-700 mb-3">
+                        <h4 class="text-center text-yellow-400 font-bold mb-2 text-sm">🏆 Top 3 Scores</h4>
+                        <ul id="airforceLeaderboardList" class="leaderboard-list">
+                            <li class="text-center text-gray-400 text-sm">Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="mem-btn mem-btn-restart bg-cyan-600 hover:bg-cyan-700 w-full"
+                            onclick="startAirforceGame()">▶️ Play</button>
+                        <button class="mem-btn mem-btn-close bg-gray-600 hover:bg-gray-700 w-full"
+                            onclick="backToHub('airforceGameOverlay')">⬅ Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- #region 🔒 SONGS HUB OVERLAY -->
+    <div id="songsHubOverlay" class="songs-hub-overlay">
+        <div class="songs-hub-container">
+            <button class="songs-hub-minimize" onclick="minimizeSongsHub()">➖</button>
+            <button class="songs-hub-close" onclick="closeSongsHub()">✖</button>
+            <h2 class="songs-hub-title">🎵 Songs Hub</h2>
+            <p class="songs-hub-subtitle">Created by Shivang</p>
+
+            <!-- Channel Grid -->
+            <div class="songs-carousel-wrapper">
+                <div class="songs-carousel" id="songsCarousel">
+                    <!-- Channel cards will be injected by JS -->
+                </div>
+            </div>
+
+            <!-- Now Playing Bar -->
+            <div class="songs-now-playing" id="songsNowPlaying">
+                <div class="songs-now-playing-inner">
+                    <div class="songs-eq" id="songsEQ">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <span class="songs-now-text" id="songsNowText">Select a channel to play</span>
+                </div>
+                <div class="songs-volume-control">
+                    <button class="songs-volume-btn" id="songsVolumeIcon" type="button"
+                        onclick="toggleSongsMute()">🔊</button>
+                    <input class="songs-volume-slider" id="songsVolumeSlider" type="range" min="0" max="100" value="80"
+                        oninput="setSongsVolume(this.value)" />
+                </div>
+                <button class="songs-stop-btn" id="songsStopBtn" onclick="stopSongsChannel()" style="display:none;">⏹
+                    Stop</button>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <div class="songs-nav">
+                <button class="songs-nav-btn" onclick="rotateSongsCarousel(-1)">◀</button>
+                <button class="songs-nav-btn" onclick="rotateSongsCarousel(1)">▶</button>
+            </div>
+        </div>
+    </div>
+    <!-- Audio element for songs -->
+    <audio id="songsAudioPlayer" preload="none"></audio>
+    <!-- #endregion -->
+
+    <!-- Floating Mini Player for Songs Hub -->
+    <div id="songsMiniPlayer" class="songs-mini-player" style="display: none;">
+        <div class="mini-player-info" onclick="maximizeSongsHub()">
+            <span class="mini-player-icon">🎵</span>
+            <div class="mini-player-text-scroll">
+                <span class="mini-player-text" id="miniPlayerText">Playing...</span>
+            </div>
+            <span class="mini-player-expand">⛶</span>
+        </div>
+        <button class="mini-player-stop" onclick="stopSongsChannel()">✖</button>
+    </div>
+
+</body>
+
+
+</html>
